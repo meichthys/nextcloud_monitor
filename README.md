@@ -15,6 +15,8 @@ pip install nextcloudmonitor
 >>> ncm = NextcloudMonitor("https://your_nextcloud_url", "nextcloud_admin_username", "nextcloud_app_password")
 >>> ncm.data['nextcloud']['system']['version']
 '16.0.5.1'
+>>> ncm.data['activeUsers']['last24hours']
+1
 ```
 
 Notes:
