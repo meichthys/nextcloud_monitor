@@ -1,0 +1,11 @@
+# Files
+Pipfile
+Pipfile.lock
+*.egg-info/
+
+# Directories
+/.venv/*
+/.vscode/*
+/__pycache__/*
+/build/*
+/dist/*
