@@ -32,7 +32,7 @@ class NextcloudMonitor:
             )
 
 
-class NextcloudPollError(Exception):
+class NextcloudMonitorError(Exception):
     """Failed to fetch nextcloud monitor data."""
 
     pass
