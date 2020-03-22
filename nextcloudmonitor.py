@@ -23,12 +23,12 @@ class NextcloudMonitor:
         self.update()
 
     def update(self):
-        response = requests.get(self.api_url, auth=(self.user, self.password))
         try:
+            response = requests.get(self.api_url, auth=(self.user, self.password))
             self.data = response.json()["ocs"]["data"]
         except:
-            raise NextcloudPollError(
-                "Connection to Nextcloud API failed. Check your url, username and password and try again"
+            raise NextcloudMonitorError(
+                "Could not fetch nextcloud api data. Check your url, username and password and try again"
             )
 
 
