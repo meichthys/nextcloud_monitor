@@ -27,7 +27,12 @@ class NextcloudMonitor:
         try:
             self.data = response.json()["ocs"]["data"]
         except:
-            raise BaseException(
+            raise NextcloudPollError(
                 "Connection to Nextcloud API failed. Check your url, username and password and try again"
             )
 
+
+class NextcloudPollError(Exception):
+    """Failed to fetch nextcloud monitor data."""
+
+    pass
