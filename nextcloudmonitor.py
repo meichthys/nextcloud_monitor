@@ -30,10 +30,8 @@ class NextcloudMonitor:
                 self.api_url, auth=(self.user, self.password), verify=self.verify_ssl
             )
             self.data = response.json()["ocs"]["data"]
-        except:
-            raise NextcloudMonitorError(
-                "Could not fetch nextcloud api data. Check your url, username and password and try again"
-            )
+        except Exception as error:
+            raise NextcloudMonitorError(f"Could not fetch nextcloud api data: {error}")
 
 
 class NextcloudMonitorError(Exception):
