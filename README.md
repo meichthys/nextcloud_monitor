@@ -29,3 +29,4 @@ Notes:
 - v1.0.0 : Initial Release
 - v1.1.0 : Added basic error handling for api errors
 - v1.2.0 : Allow ssl verification bypass
+- v1.2.1 : Privide more detailed feedback for api connection errors
