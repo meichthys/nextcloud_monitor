@@ -27,7 +27,7 @@ class NextcloudMonitor:
     def update(self):
         try:
             response = requests.get(
-                self.api_url, auth=(self.user, self.password), verify=self.verify_ssl
+                self.api_url, auth=(self.user, self.password), verify=self.verify_ssl, headers={"OCS-APIRequest": "true"}
             )
             self.data = response.json()["ocs"]["data"]
         except Exception as error:
