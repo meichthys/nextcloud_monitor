@@ -1,6 +1,6 @@
-"""Contains the NextcloudMonitor class"""
-
+"""Nextcloud test."""
 import requests
+from requests.exceptions import ConnectionError, JSONDecodeError
 
 
 class NextcloudMonitor:
@@ -29,12 +29,46 @@ class NextcloudMonitor:
             response = requests.get(
                 self.api_url, auth=(self.user, self.password), verify=self.verify_ssl
             )
-            self.data = response.json()["ocs"]["data"]
-        except Exception as error:
-            raise NextcloudMonitorError(f"Could not fetch nextcloud api data: {error}")
+        except ConnectionError as error:
+            raise NextcloudMonitorConnectionError(
+                f"Can not connect to nextcloud server: {error}"
+            )
+
+        if response.status_code == 401:
+            raise NextcloudMonitorAuthorizationError
+
+        if response.status_code != 200:
+            raise NextcloudMonitorRequestError(
+                f"Could not fetch nextcloud api data: {response.reason}"
+            )
+
+        try:
+            self.data = response.json()["ocs"]["dat"]
+        except (KeyError, JSONDecodeError) as error:
+            raise NextcloudMonitorRequestError(
+                f"Could not fetch nextcloud api data: {error}"
+            )
 
 
 class NextcloudMonitorError(Exception):
+    """Base nextcloud monitor exception."""
+
+    pass
+
+
+class NextcloudMonitorAuthorizationError(NextcloudMonitorError):
+    """Failed to authorize at nextcloud server."""
+
+    pass
+
+
+class NextcloudMonitorConnectionError(NextcloudMonitorError):
+    """Failed to fetch nextcloud monitor data."""
+
+    pass
+
+
+class NextcloudMonitorRequestError(NextcloudMonitorError):
     """Failed to fetch nextcloud monitor data."""
 
     pass
