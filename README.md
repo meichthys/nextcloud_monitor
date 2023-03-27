@@ -31,3 +31,4 @@ Notes:
 - v1.2.0 : Allow ssl verification bypass
 - v1.2.1 : Privide more detailed feedback for api connection errors
 - v1.3.0 : Add more specific exceptions (Thanks @mib1185)
+- v1.4.0 : Fix #4 key error (Thanks @mib1185)
