@@ -43,7 +43,7 @@ class NextcloudMonitor:
             )
 
         try:
-            self.data = response.json()["ocs"]["dat"]
+            self.data = response.json()["ocs"]["data"]
         except (KeyError, JSONDecodeError) as error:
             raise NextcloudMonitorRequestError(
                 f"Could not fetch nextcloud api data: {error}"
