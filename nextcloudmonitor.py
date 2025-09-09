@@ -36,27 +36,28 @@ class NextcloudMonitor:
 
     def update(self):
         try:
-            response = requests.get(
-                self.api_url, auth=(self.user, self.password), verify=self.verify_ssl
-            )
+            with requests.get(
+                self.api_url, auth=(self.user, self.password), verify=self.verify_ssl, timeout=10
+            ) as response:
+    
+                if response.status_code == 401:
+                    raise NextcloudMonitorAuthorizationError
+    
+                if response.status_code != 200:
+                    raise NextcloudMonitorRequestError(
+                        f"Could not fetch nextcloud api data: {response.reason}"
+                    )
+    
+                try:
+                    self.data = response.json()["ocs"]["data"]
+                except (KeyError, JSONDecodeError) as error:
+                    raise NextcloudMonitorRequestError(
+                        f"Could not fetch nextcloud api data: {error}"
+                    )
+    
         except ConnectionError as error:
             raise NextcloudMonitorConnectionError(
-                f"Can not connect to nextcloud server: {error}"
-            )
-
-        if response.status_code == 401:
-            raise NextcloudMonitorAuthorizationError
-
-        if response.status_code != 200:
-            raise NextcloudMonitorRequestError(
-                f"Could not fetch nextcloud api data: {response.reason}"
-            )
-
-        try:
-            self.data = response.json()["ocs"]["data"]
-        except (KeyError, JSONDecodeError) as error:
-            raise NextcloudMonitorRequestError(
-                f"Could not fetch nextcloud api data: {error}"
+                f"Cannot connect to Nextcloud server: {error}"
             )
 
 
