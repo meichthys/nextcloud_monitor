@@ -10,6 +10,7 @@ pip install nextcloudmonitor
 
 ## QuickStart
 
+### Using an app password
 ```python
 >>> from nextcloudmonitor import NextcloudMonitor
 >>> ncm = NextcloudMonitor("https://your_nextcloud_url", "nextcloud_admin_username", "nextcloud_app_password")
@@ -20,9 +21,22 @@ pip install nextcloudmonitor
 ```
 
 Notes:
-
 - The user must be a user that has access to the nextcloud monitor api (generally an admin user)
 - The nextcloud app password should be generated from the nextcoud security settings page.
+
+### Using an access token
+```python
+>>> from nextcloudmonitor import NextcloudMonitor
+>>> ncm = NextcloudMonitor("https://your_nextcloud_url", "", "serverinfo_access_token")
+>>> ncm.data['nextcloud']['system']['version']
+'16.0.5.1'
+>>> ncm.data['activeUsers']['last24hours']
+1
+```
+
+Notes:
+ - The access token is a self-generated string set using `occ config:app:set serverinfo token --value your_access_token`
+ - The access token is currently limited to the serverinfo app
 
 ## Change Log
 

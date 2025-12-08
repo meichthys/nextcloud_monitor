@@ -9,8 +9,8 @@ class NextcloudMonitor:
 
     Attributes:
         nextcloud_url (str): Full https url to a nextcloud instance
-        user (str): Username of the Nextcloud user with access to the monitor api
-        app_password (str): App password generated from Nextcloud security settings page
+        user (str): Username of the Nextcloud user with access to the monitor api OR Empty to use app_password as token
+        app_password (str): App password generated from Nextcloud security settings page OR Serverinfo app access token set via occ
         verify_ssl (bool): Allow bypassing ssl verification, but verify by default
         skip_update (bool): Omit server updates data (default true)
         skip_apps (bool): Omit app updates data (default false)
@@ -29,16 +29,25 @@ class NextcloudMonitor:
             self.api_url += "&skipApps=true"
         else:
             self.api_url += "&skipApps=false"
-        self.user = user
-        self.password = app_password
+        if user:
+            self.user = user
+            self.password = app_password
+        else:
+            self.access_token = app_password
         self.verify_ssl = verify_ssl
         self.update()
 
     def update(self):
         try:
-            response = requests.get(
-                self.api_url, auth=(self.user, self.password), verify=self.verify_ssl
-            )
+            if hasattr(self, 'access_token'):
+                headers = { 'NC-Token': self.access_token }
+                response = requests.get(
+                    self.api_url, headers=headers, verify=self.verify_ssl
+                )
+            else:
+                response = requests.get(
+                    self.api_url, auth=(self.user, self.password), verify=self.verify_ssl
+                )
         except ConnectionError as error:
             raise NextcloudMonitorConnectionError(
                 f"Can not connect to nextcloud server: {error}"
