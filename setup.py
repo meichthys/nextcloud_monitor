@@ -1,5 +1,6 @@
-import setuptools
 from os import path
+
+import setuptools
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
@@ -8,7 +9,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
 
 setuptools.setup(
     name="nextcloudmonitor",
-    version="1.5.1",
+    version="1.6.0",
     description="Python wrapper around nextcloud monitor api",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -20,7 +21,7 @@ setuptools.setup(
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
-        "Topic :: System :: Networking"
+        "Topic :: System :: Networking",
     ],
     url="https://github.com/meichthys/nextcloud_monitor",
 )
