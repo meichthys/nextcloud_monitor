@@ -47,5 +47,6 @@ Notes:
 - v1.3.0 : Add more specific exceptions (Thanks @mib1185)
 - v1.4.0 : Fix #4 key error (Thanks @mib1185)
 - v1.5.0 : Support 'skip' parameter (Thanks @mib1185)
+- v1.6.0 : Support token auth (Thanks @RoepLuke)
 - v1.5.1 : Fix License Classifier (Thanks @joostlek)
-- v1.5.2 : Add url and additional classifiers (Fixes #1)
+- v1.6.0 : Support token auth (Thanks @RoepLuke)
